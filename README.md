@@ -9,4 +9,4 @@ Making my first game using libGDX.
 * 1/2 player option
 * Music/Sounds
 * CPU Difficulty
-* Ball speed
+* Different ball speeds
