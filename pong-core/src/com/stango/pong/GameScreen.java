@@ -85,9 +85,9 @@ public class GameScreen implements Screen {
 		if(playerRec.y > 800 - 256)
 			playerRec.y = 800 - 256;
 		
-		//ball randomly goes left or right at start
-		pokeball.x += Math.cos(Math.toRadians(angle)) * 7;
-		pokeball.y += Math.sin(Math.toRadians(angle)) * 7;
+		//ball randomly goes left or right at start(not implemented)
+		pokeball.x += Math.cos(Math.toRadians(angle)) * game.diff;
+		pokeball.y += Math.sin(Math.toRadians(angle)) * game.diff;
 		//out of bounds check
 		if(pokeball.x < 0 || pokeball.x > 1000 - 90)
 		{
@@ -112,7 +112,7 @@ public class GameScreen implements Screen {
 			cpuRec.y = 0;
 		if(cpuRec.y > 800 - 256)
 			cpuRec.y = 800 - 256;
-		cpuRec.y += Math.sin(Math.toRadians(angle)) * 2;
+		cpuRec.y += Math.sin(Math.toRadians(angle)) * (game.diff / 3);
 	}
 
 	@Override

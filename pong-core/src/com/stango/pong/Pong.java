@@ -8,6 +8,7 @@ public class Pong extends Game
 {
 	public SpriteBatch batch;
 	public BitmapFont font;
+	public int diff = 7;
 	
 	public void create()
 	{
