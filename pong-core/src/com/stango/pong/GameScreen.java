@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,13 +19,16 @@ public class GameScreen implements Screen {
 	private Rectangle playerRec;
 	private Rectangle cpuRec;
 	private Rectangle pokeball;
+	
 	//int angle = (int) (Math.random() * 361);
 	int angle = 45;
 	int score = 0;
-	boolean bounce = false;
-	Texture paddle1; //paddle 64x256
-	Texture paddle2;
-	Texture ball; //ball 90x90
+	private Texture paddle1; //paddle 64x256
+	private Texture paddle2;
+	private Texture ball; //ball 90x90
+	private Sound bounce;
+	private Sound plusPoint;
+	private Music gameSong;
 	
 	public GameScreen(final Pong g)
 	{
@@ -33,6 +38,12 @@ public class GameScreen implements Screen {
 		paddle1 = new Texture(Gdx.files.internal("paddle1.png"));
 		paddle2 = new Texture(Gdx.files.internal("paddle1.png"));
 		ball = new Texture(Gdx.files.internal("pokeball.png"));
+		bounce = Gdx.audio.newSound(Gdx.files.internal("bounce.wav"));
+		plusPoint = Gdx.audio.newSound(Gdx.files.internal("plus.wav"));
+		gameSong = Gdx.audio.newMusic(Gdx.files.internal("Palette Town Theme.mp3"));
+		
+		gameSong.setLooping(true);
+		gameSong.play();
 		
 		//player paddle stuff
 		playerRec = new Rectangle();
@@ -92,19 +103,31 @@ public class GameScreen implements Screen {
 		if(pokeball.x < 0 || pokeball.x > 1000 - 90)
 		{
 			if(pokeball.x < 0)
+			{
 				score++;
+				plusPoint.play();
+			}
 			else
 				score--;
 			pokeball.x = 500 - 45;
 		}
 		if(pokeball.y < 0 || pokeball.y > 800 - 90)
+		{
 			angle = 360 - angle;
+			bounce.play();
+		}
 		
 		//if ball hits paddle
 		if(pokeball.overlaps(playerRec))
+		{
 			angle = 180 - angle;
+			bounce.play();
+		}
 		if(pokeball.overlaps(cpuRec))
+		{
 			angle = 180 - angle;
+			bounce.play();
+		}
 		
 		//cpu paddle
 		//limit check
@@ -151,5 +174,8 @@ public class GameScreen implements Screen {
 		paddle1.dispose();
 		paddle2.dispose();
 		ball.dispose();
+		bounce.dispose();
+		plusPoint.dispose();
+		gameSong.dispose();
 	}		
 }
