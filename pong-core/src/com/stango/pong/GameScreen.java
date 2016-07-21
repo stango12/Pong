@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
 	private Texture paddle2;
 	private Texture ball; //ball 90x90
 	private Sound bounce;
-	private Sound plusPoint;
+	private Sound plusPoint, losePoint;
 	private Music gameSong;
 	
 	public GameScreen(final Pong g)
@@ -40,6 +40,7 @@ public class GameScreen implements Screen {
 		ball = new Texture(Gdx.files.internal("pokeball.png"));
 		bounce = Gdx.audio.newSound(Gdx.files.internal("bounce.wav"));
 		plusPoint = Gdx.audio.newSound(Gdx.files.internal("plus.wav"));
+		losePoint = Gdx.audio.newSound(Gdx.files.internal("lose.wav"));
 		gameSong = Gdx.audio.newMusic(Gdx.files.internal("Palette Town Theme.mp3"));
 		
 		gameSong.setLooping(true);
@@ -108,7 +109,10 @@ public class GameScreen implements Screen {
 				plusPoint.play();
 			}
 			else
+			{
 				score--;
+				losePoint.play();
+			}
 			pokeball.x = 500 - 45;
 		}
 		if(pokeball.y < 0 || pokeball.y > 800 - 90)
